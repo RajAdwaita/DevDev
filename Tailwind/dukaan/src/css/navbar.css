@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    justify-content: space-around
+}
+
+.d1 {
+    background-color: rgb(233, 147, 28);
+}
+
+.d2 {
+    background-color: rgb(212, 74, 224);
+}
+
+.d3 {
+    background-color: yellow;
+}
