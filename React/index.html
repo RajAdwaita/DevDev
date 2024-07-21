@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMPLE</title>
+</head>
+
+<body>
+    <div id="btn"></div>
+
+    <!-- <button class="btn" onclick="solve()">SCORE <span class="val" id="val">0</span></button> -->
+
+
+    <!-- <script src="./script.js"></script> -->
+    <script>
+        let state = {
+            count: 0,
+        };
+
+        function clicker() {
+            state.count += 1;
+            btnRender();
+        }
+
+        function btnRender() {
+            document.getElementById("btn").innerHTML = "";
+            const comp = btnComp(state.count);
+            document.getElementById("btn").appendChild(comp);
+        }
+
+        function btnComp(count) {
+            const butt = document.createElement("button");
+            butt.innerHTML = `Counter ${count}`;
+            butt.setAttribute('onclick', 'clicker()');
+            return butt;
+        }
+        btnRender();
+    </script>
+</body>
+
+</html>
