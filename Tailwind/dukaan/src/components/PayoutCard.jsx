@@ -3,7 +3,7 @@ import React from 'react'
 const PayoutCard = ({ title, amount, countOrder, nextPayment }) => {
     return (
 
-        <div>
+        <div className=''>
 
             <div className='shadow-md rounded bg-[#146EB4] p-6 text-white  pb-0 hover:bg-[#0E4F82]' >
                 <div>
