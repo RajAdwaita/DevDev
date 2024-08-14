@@ -6,7 +6,7 @@ const Sidebar = () => {
         <>
             <div className="w-1/6  bg-[#1E2640] text-white p-2 min-h-screen">
                 <div className=''>
-                    <div className='flex items-center justify-start'>
+                    <div className='flex items-center justify-start p-2'>
                         <img className='rounded-full object-cover h-10 w-10' src={img} alt="Profile" />
                         <div className='flex-grow ml-4'>
                             Adwaita
@@ -92,8 +92,8 @@ const Sidebar = () => {
                 </div>
 
                 <div className='p-2  bg-[#353C53] rounded-md flex justify-evenly'>
-                    <div className='bg-[#FFFFFF]/10 h-7 w-6 '>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <div className='bg-[#FFFFFF]/10 h-10 w-12 flex  justify-center items-center rounded-md'>
+                        <svg className='w-10 h-8' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
                         </svg>
 
