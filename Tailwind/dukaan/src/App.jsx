@@ -14,11 +14,11 @@ function App() {
 
         <Sidebar />
 
-        <div className="flex flex-col flex-grow">
+        <div className="flex flex-col flex-grow ml-[16.66%] ">
 
           <Navbar />
 
-          <div className="p-6 mt-4 ml-4">
+          <div className=" p-6 mt-20 ml-4">
             <div className='flex justify-between p-2 mb-3'>
               <div className='text-2xl font-medium'>
                 Overview
@@ -38,17 +38,17 @@ function App() {
             </div>
 
 
-            <div className='grid grid-cols-3 gap-4'>
+            <div className='grid grid-cols-3 gap-6 '>
 
-              <div>
+              <div className='min-w-0'>
                 <PayoutCard title="Next Payout" amount={2312.23} countOrder={23} nextPayment={"Today, 4:00 PM"} />
               </div>
 
-              <div>
+              <div className='min-w-0'>
                 <RevenueCard title={"Amount Pending"} amount={92000.12} countOrder={13} />
               </div>
 
-              <div>
+              <div className='min-w-0'>
                 <RevenueCard title={"Amount Processed"} amount={9865487.12} />
               </div>
             </div>

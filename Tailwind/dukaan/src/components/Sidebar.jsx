@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import img from '../assets/logo.png'
 
 const Sidebar = () => {
+    const [isOpen, setIsOpen] = useState(true)
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen);
+    }
     return (
         <>
-            <div className="w-1/6  bg-[#1E2640] text-white p-2 min-h-screen">
+            {/* <div className={`  ${isOpen ? 'fixed top-0 left-0 w-1/6' : 'w-0 -translate-x-full overflow-hidden mr-[-260px]'} bg-[#1E2640] text-white p-2 min-h-screen transition-all lg:w-0 lg:hidden`}> */}
+            <div className='hidden lg:block lg:fixed lg:top-0 lg:left-0 lg:w-1/6 lg:bg-[#1E2640] lg:text-white lg:p-2 lg:min-h-screen lg:transition-all'>
                 <div className=''>
                     <div className='flex items-center justify-start p-2'>
                         <img className='rounded-full object-cover h-10 w-10' src={img} alt="Profile" />

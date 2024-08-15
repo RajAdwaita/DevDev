@@ -5,10 +5,10 @@ import '../index.css'
 const Navbar = () => {
     return (
         <>
-            <div className='border-2 border-gray bg-[#FFFFFF] flex p-3 items-center'>
+            <div className='fixed top-0 right-0 left-[16.66%]  z-50  border-2 border-gray bg-[#FFFFFF] flex p-3 items-center'>
 
                 {/* Left Section: Payouts and How it works */}
-                <div className='flex gap-3 items-center'>
+                <div className=' flex gap-3 items-center'>
                     <h2 className='text-lg font-semibold'>Payouts</h2>
                     <h4 className='flex text-xs items-center'>
                         <svg className='w-5 h-5 mr-1' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
