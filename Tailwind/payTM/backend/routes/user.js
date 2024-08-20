@@ -64,10 +64,10 @@ userRouter.post('/signup', async (req, res) => {
 
 
         const token = jwt.sign({
-            userId
+            userId: userId
         }, JWT_SECRET)
 
-        res.json({
+        res.status(200).json({
             message: "User Created",
             token: token
         })
