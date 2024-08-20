@@ -5,6 +5,13 @@ const mainRouter = require('./routes/index')
 const cookieParser = require('cookie-parser')
 const cors = require('cors');
 
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+
 MONGO_URL = "mongodb+srv://adwaitaraj:9nM1dwkzCXhwzgti@cluster0.03zet.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 connectionToDB(MONGO_URL)
     .then(() => {
@@ -16,10 +23,7 @@ connectionToDB(MONGO_URL)
 
     })
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+
 
 const PORT = process.env.PORT || 3000;
 
