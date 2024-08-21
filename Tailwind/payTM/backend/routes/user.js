@@ -13,6 +13,73 @@ const { authMiddleware } = require('../Middlewares/middleware');
 
 
 
+userRouter.get('/bulk', async (req, res) => {
+    try {
+
+        const filter = req.query.filter || "";
+
+        const users = await User.find({
+            $or: [{
+                firstName: {
+                    "$regex": filter
+                }
+            },
+            {
+                lastName: {
+                    "$regex": filter
+                }
+            }]
+        })
+
+        res.json({
+            user: users.map(user => ({
+                userName: user.userName,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                _id: user._id
+            }))
+        })
+
+    }
+    catch (error) {
+        return res.status(400).json({
+            message: error
+        })
+    }
+})
+
+
+userRouter.get('/allusers', async (req, res) => {
+    try {
+
+        const users = await User.find({})
+
+        if (users.length === 0) {
+            return res.status(404).json({
+                message: "User Not Found"
+            })
+        }
+
+        // users.forEach(user => {
+        //     console.log(user);
+
+        // })
+
+        return res.status(200).json({
+            users: users
+        })
+
+
+    }
+    catch (error) {
+        console.log(error)
+        return res.status(400).json({
+            message: "ERROR"
+        })
+    }
+})
+
+
 userRouter.post('/signup', async (req, res) => {
     // console.log("Sign up");
     // res.send("SIGNUP");
@@ -67,7 +134,7 @@ userRouter.post('/signup', async (req, res) => {
             userId
         }, JWT_SECRET)
 
-        res.json({
+        res.status(200).json({
             message: "User Created",
             token: token
         })
@@ -121,7 +188,7 @@ userRouter.post('/login', async (req, res) => {
         }
 
         const token = jwt.sign({
-            id: user._id,
+            userId: user._id,
             userName: user.userName,
         }, JWT_SECRET)
 
