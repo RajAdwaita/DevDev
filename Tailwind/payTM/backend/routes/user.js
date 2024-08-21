@@ -131,7 +131,7 @@ userRouter.post('/signup', async (req, res) => {
 
 
         const token = jwt.sign({
-            userId: userId
+            userId
         }, JWT_SECRET)
 
         res.status(200).json({
@@ -188,7 +188,7 @@ userRouter.post('/login', async (req, res) => {
         }
 
         const token = jwt.sign({
-            id: user._id,
+            userId: user._id,
             userName: user.userName,
         }, JWT_SECRET)
 

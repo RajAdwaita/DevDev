@@ -7,10 +7,10 @@ const CreateUser = () => {
     const [password, setPassword] = useState("")
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        Axios.post('http://localhost:3000/api/v1/user/signup',
+        await Axios.post('http://localhost:3000/api/v1/user/signup',
             {
                 userName: userName,
                 firstName: firstName,
