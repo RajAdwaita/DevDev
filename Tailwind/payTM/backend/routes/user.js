@@ -49,7 +49,7 @@ userRouter.get('/bulk', async (req, res) => {
 })
 
 
-userRouter.get('/allusers', async (req, res) => {
+userRouter.get('/allusers', authMiddleware, async (req, res) => {
     try {
 
         const users = await User.find({})
@@ -158,7 +158,9 @@ userRouter.post('/login', async (req, res) => {
         const { success, error } = loginSchema.safeParse(req.body);
         if (!success) {
             return res.json({
-                message: "Incorrect inputs"
+                success: false,
+                message: "Incorrect inputs",
+                errors: error.errors
             })
         }
 
@@ -173,6 +175,7 @@ userRouter.post('/login', async (req, res) => {
 
         if (!user) {
             return res.json({
+                success: false,
                 message: "Incorrect Username or Password"
             })
         }
@@ -183,6 +186,7 @@ userRouter.post('/login', async (req, res) => {
 
         if (!isMatch) {
             return res.json({
+                success: false,
                 message: "Invalid Password"
             })
         }
@@ -193,6 +197,7 @@ userRouter.post('/login', async (req, res) => {
         }, JWT_SECRET)
 
         res.json({
+            success: true,
             message: "User logged in",
             token: token
         })
@@ -201,7 +206,7 @@ userRouter.post('/login', async (req, res) => {
         if (error instanceof zod.ZodError) {
             return res.status(400).json({ error: error.errors });
         }
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ success: fale, message: "Internal server error" });
     }
 
 })
