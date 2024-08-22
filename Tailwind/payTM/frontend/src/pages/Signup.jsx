@@ -1,37 +1,59 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-
+import { Link, useNavigate } from 'react-router-dom'
 const signup = () => toast('Account Created.');
 
 
 const Signup = () => {
 
+    const navigate = useNavigate();
 
     const [userName, setUserName] = useState("")
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [password, setPassword] = useState("")
 
+    useEffect(() => {
+        try {
+            const token = localStorage.getItem('token')
+            if (token != "") {
+                navigate('/dashboard')
+            }
+            else {
+                navigate('/signup')
+            }
+        }
+        catch (error) {
+            console.log(error);
 
+        }
+
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
 
+
         try {
 
-            await Axios.post('http://localhost:3000/api/v1/user/signup',
+
+            const response = await Axios.post('http://localhost:3000/api/v1/user/signup',
                 {
                     userName: userName,
                     firstName: firstName,
                     lastName: lastName,
                     password: password
                 })
+            // console.log(response.data.token);
+
+            localStorage.setItem("token", response.data.token);
 
             toast.success('Account Created !')
             setTimeout(() => {
-                window.location.reload();
+                // window.location.reload();
+                navigate('/login')
             }, 2000)
         }
         catch (error) {
@@ -56,7 +78,7 @@ const Signup = () => {
             <div className="flex items-center justify-center min-h-screen bg-blue-100">
                 <div className="bg-white p-8 rounded-md shadow-lg w-full max-w-lg">
                     <div className="flex flex-col items-center">
-                        <div className="font-bold text-2xl mb-4">Sign In</div>
+                        <div className="font-bold text-2xl mb-4">Sign Up</div>
                         <div className="text-center text-sm mb-6">
                             Enter Your information to create your account
                         </div>
@@ -101,7 +123,8 @@ const Signup = () => {
                     </form>
                     <div className="flex justify-center mt-4">
                         <span className="text-sm">Already have an account? </span>
-                        <a className="underline ml-1 text-sm text-blue-500" href="/login">Login</a>
+                        <Link className="underline ml-1 text-sm text-blue-500" to={'/login'}>Login</Link>
+                        {/* <a className="underline ml-1 text-sm text-blue-500" href="/login">Login</a> */}
                     </div>
                 </div>
             </div >
