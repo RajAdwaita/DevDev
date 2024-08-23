@@ -48,7 +48,7 @@ const Signup = () => {
                 })
             // console.log(response.data.token);
 
-            localStorage.setItem("token", response.data.token);
+            // localStorage.setItem("token", response.data.token);
 
             toast.success('Account Created !')
             setTimeout(() => {

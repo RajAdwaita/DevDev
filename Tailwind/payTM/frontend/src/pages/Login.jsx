@@ -14,7 +14,7 @@ const Login = () => {
     useEffect(() => {
         try {
             const token = localStorage.getItem('token')
-            if (token != "") {
+            if (token) {
                 navigate('/dashboard')
             }
             else {
@@ -26,7 +26,7 @@ const Login = () => {
 
         }
 
-    }, [])
+    }, [navigate])
 
     const handleSubmit = (async (e) => {
         e.preventDefault();
@@ -39,6 +39,8 @@ const Login = () => {
                 },
 
             )
+            const token = response.data.token;
+            localStorage.setItem("token", token)
             if (response.data.success) {
 
                 await toast.success("Login Successful")

@@ -130,13 +130,13 @@ userRouter.post('/signup', async (req, res) => {
 
 
 
-        const token = jwt.sign({
-            userId
-        }, JWT_SECRET)
+        // const token = jwt.sign({
+        //     userId
+        // }, JWT_SECRET)
 
         res.status(200).json({
             message: "User Created",
-            token: token
+            // token: token
         })
     }
     catch (error) {
@@ -193,7 +193,7 @@ userRouter.post('/login', async (req, res) => {
 
         const token = jwt.sign({
             userId: user._id,
-            userName: user.userName,
+            // userName: user.userName,
         }, JWT_SECRET)
 
         res.json({

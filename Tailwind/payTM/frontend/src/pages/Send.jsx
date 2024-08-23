@@ -10,8 +10,8 @@ const Send = () => {
     useEffect(() => {
         try {
             const token = localStorage.getItem('token')
-            if (token != "") {
-                navigate('/send')
+            if (token) {
+                // navigate('/send')
             }
             else {
                 navigate('/signup')
@@ -22,7 +22,7 @@ const Send = () => {
 
         }
 
-    }, [])
+    }, [navigate])
 
 
 
