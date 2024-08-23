@@ -26,11 +26,30 @@ const Users = () => {
     // }, [search])
 
     useEffect(() => {
+        try {
+            const token = localStorage.getItem('token')
+            if (token) {
+                navigate('/dashboard')
+            }
+            else {
+                navigate('/signup')
+            }
+        }
 
+        catch (error) {
+            console.log(error)
+
+        }
 
         async function getUsers() {
             try {
                 const token = localStorage.getItem('token')
+                if (token) {
+                    navigate('/dashboard')
+                }
+                else {
+                    navigate('/signup')
+                }
                 const response = await Axios.get('http://localhost:3000/api/v1/user/allusers',
                     {
                         headers: {
@@ -62,9 +81,11 @@ const Users = () => {
         }
         getUsers();
 
-    }, [search])
+    }, [navigate, search])
 
     const handleClick = (user) => {
+        console.log(user);
+
         // navigate('/send')
         // navigate('/send', { state: { user } })
         navigate('/send?id=' + user._id + "&name=" + user.firstName)
@@ -90,7 +111,7 @@ const Users = () => {
                                 <div className='bg-black text-white h-10 w-10 text-xl font-semibold rounded-full flex items-center justify-center'>{user.firstName[0]}</div>
                                 <div>{user.firstName} {user.lastName}</div>
                             </div>
-                            <div className='mr-28'><button className='p-4 bg-black text-white rounded-xl' onClick={() => handleClick(user)}>Send Money</button></div>
+                            <div className='mr-28'><button className='p-4 bg-black text-white rounded-xl' type='submit' onClick={() => handleClick(user)}>Send Money</button></div>
                         </div>
                     ))
 
