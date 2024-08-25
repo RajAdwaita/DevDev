@@ -147,18 +147,41 @@
 
 // }
 
-function getMax(arr: number[]) {
-    let maxValue: number = 0;
-    arr.forEach((a) => {
-        if (a > maxValue) {
-            maxValue = a;
-        }
-    });
+// function getMax(arr: number[]) {
+//     let maxValue: number = 0;
+//     arr.forEach((a) => {
+//         if (a > maxValue) {
+//             maxValue = a;
+//         }
+//     });
 
-    return maxValue;
+//     return maxValue;
+// }
+
+
+// const ans: number = getMax([12, 32, 54, 1, 23, 67])
+
+// console.log(ans);
+// type keyInput = "Left" | "Right" | "Up" | "Down"
+
+// enum Direction {
+//     Up, Left, Right, Down
+// }
+
+
+// function doSomething(keyPressed: Direction) {
+//     const x = Direction[keyPressed]
+//     console.log(x);
+
+// }
+// // doSomething("Left")
+// doSomething(Direction.Right)
+
+type Input = number | string;
+
+function getData<T>(input: T) {
+    console.log(input);
+
 }
-
-
-const ans: number = getMax([12, 32, 54, 1, 23, 67])
-
-console.log(ans);
+getData<string[]>(["adawita", "asdasda"].map(s => s.toUpperCase()))
+// getData(1235435)
