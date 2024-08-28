@@ -1,10 +1,8 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 // async function createUser(username: string, password: string, firstName: string, lastName: string) {
-
-
 //     try {
 //         const user = await prisma.user.create({
 //             data: {
@@ -19,21 +17,15 @@ const prisma = new PrismaClient()
 //             }
 //         })
 //         console.log(user);
-
-
-
 //     }
 //     catch (error) {
 //         console.log(error);
-
 //     }
 // }
-
 // interface UpdateParams {
 //     firstName: string,
 //     lastName: string
 // }
-
 // async function updateUser(username: string, { firstName, lastName }: UpdateParams) {
 //     try {
 //         const user = await prisma.user.update({
@@ -49,13 +41,10 @@ const prisma = new PrismaClient()
 //                 lastName: true
 //             }
 //         })
-
 //         console.log(user);
-
 //     }
 //     catch (err) {
 //         console.log(err);
-
 //     }
 // }
 // updateUser('cr7',
@@ -65,19 +54,9 @@ const prisma = new PrismaClient()
 //     }
 // ).then(() => {
 //     console.log('User Updated');
-
 // }).catch((e) => {
 //     console.log(e);
-
 // }).finally(async () => {
 //     await prisma.$disconnect();
 // })
 // createUser('lm10', 'abc123', 'Lewo', 'massi')
-
-
-const signup = (() => {
-    return (
-        <div>
-        </div>
-    )
-})
