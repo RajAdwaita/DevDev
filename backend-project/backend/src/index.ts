@@ -2,156 +2,232 @@ import { Hono } from 'hono'
 import { decode, sign, verify } from 'hono/jwt'
 import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
+import { userRouter } from './routes/user';
+import { blogRouter } from './routes/blog';
 // const app = new Hono()
 
 const app = new Hono<{
   Bindings: {
     DATABASE_URL: string,
     JWT_SECRET: string
+  },
+  Variables: {
+    prisma: any
+    userId: any
   }
 }>().basePath('/api/v1');
 
-
-app.post('/signup', async (c) => {
-  try {
-    const prisma = new PrismaClient({
-      datasourceUrl: c.env.DATABASE_URL,
-    }).$extends(withAccelerate())
-
-    const body = await c.req.json();
-    const user = await prisma.user.create({
-      data: {
-        email: body.email,
-        name: body.name,
-        password: body.password,
-      },
-    })
+app.route('/user', userRouter);
+app.route('/blog', blogRouter);
 
 
-    const payload = {
-      sub: user.id,
-      role: 'user',
+// app.use('*', async (c, next) => {
+//   const prisma = new PrismaClient({
+//     datasourceUrl: c.env.DATABASE_URL,
+//   }).$extends(withAccelerate())
 
-    }
+//   c.set('prisma', prisma);
+//   await next();
 
-    const secret = c.env.JWT_SECRET;
+// })
 
-    const token = await sign(payload, secret);
+// app.use('/api/v1/blog/*', async (c, next) => {
 
-    console.log(`TOKEN :   ${token}`);
+//   const JWT_SECRET = c.env.JWT_SECRET;
+//   const authHeader = c.req.header('Authorization');
 
-    // localStorage.setItem('token', token);
+//   if (!authHeader || !authHeader.startsWith('Bearer ')) {
+//     c.status(403);
+//     return c.json({
+//       message: 'Blocked'
+//     })
+//   }
 
-    console.log(user.id);
+//   const token = authHeader.split(" ")[1]
 
+//   try {
 
-    return (
-      c.text('User Created')
-    )
-
-  }
-  catch (err) {
-    console.log(err);
-
-  }
-
-})
+//     const decoded = await verify(token, JWT_SECRET);
+//     console.log(`Decoded : ${decoded}`);
+//     if (decoded.id) {
+//       // c.req.id = decoded;
+//       // const userId = decoded.id;
+//       c.set('userId', decoded.id);
+//       await next();
 
 
 
+//     }
+//     else {
+//       console.log("Token Error Here ");
+//       c.status(403)
+//       return c.json({
+//         message: "Invlaid token"
+//       })
 
-app.post('/login', async (c) => {
-
-
-  try {
-
-    const prisma = new PrismaClient({
-      datasourceUrl: c.env?.DATABASE_URL,
-    }).$extends(withAccelerate())
-
-
-    const body = await c.req.json();
-    const user = await prisma.user.findUnique({
-      where: {
-        email: body.email
-      }
-    })
-
-    if (!user) {
-      c.status(403);
-      return c.json({
-        error: "User Not Found"
-      })
-    }
-    if (body.password === user.password)
-      return c.text("Logged In");
-    else
-      return c.text("Wrong Password");
+//     }
 
 
 
-    // const payload = {
-    //   sub: user.id,
-    //   role: 'user',
-
-    // }
-
-    // const secret = c.env.JWT_SECRET;
-
-    // const token = await sign(payload, secret);
-
-    // console.log(`TOKEN :   ${token}`);
-
-
-  }
-  catch (err) {
-    console.log(err);
-    c.status(403);
-    return c.json({
-      message: "Something is worng"
-    })
-
-  }
+//   }
+//   catch (err) {
+//     c.status(403);
+//     return c.json({
+//       message: "Error Occurred"
+//     })
+//   }
 
 
 
-  // return (
-  //   c.text('login')
-  // )
+// })
 
-})
+// app.post('/signup', async (c) => {
+//   try {
+//     // const prisma = new PrismaClient({
+//     //   datasourceUrl: c.env.DATABASE_URL,
+//     // }).$extends(withAccelerate())
+//     const prisma = await c.get('prisma');
+//     const body = await c.req.json();
+//     const user = await prisma.user.create({
+//       data: {
+//         email: body.email,
+//         name: body.name,
+//         password: body.password,
+//       },
+//     })
+
+
+//     const payload = {
+//       id: user.id,
+
+//     }
+
+//     const secret = c.env.JWT_SECRET;
+
+//     const token = await sign(payload, secret);
+
+//     console.log(`TOKEN :   ${token}`);
+
+//     // localStorage.setItem('token', token);
+
+//     console.log(user.id);
 
 
 
+//     return (
+//       // c.text('User Created')
+//       c.json({
+//         token: token
+//       })
+//     )
 
-app.post('/blog', (c: any) => {
-  return (
-    c.text('Create Blog')
-  )
+//   }
+//   catch (err) {
+//     console.log(err);
 
-})
+//   }
+
+// })
 
 
 
 
-app.put('/blog', (c: any) => {
-  return (
-    c.text('Update Blogs')
-  )
-
-})
+// app.post('/login', async (c) => {
 
 
+//   try {
+
+//     // const prisma = new PrismaClient({
+//     //   datasourceUrl: c.env?.DATABASE_URL,
+//     // }).$extends(withAccelerate())
+//     const prisma = await c.get('prisma');
 
 
-app.get('/blog/:id', (c: any) => {
-  const id = c.req.param('id');
-  console.log(id);
+//     const body = await c.req.json();
+//     const user = await prisma.user.findUnique({
+//       where: {
+//         email: body.email
+//       }
+//     })
 
-  return (
-    c.text(`get Blogs ${id}`)
-  )
+//     if (!user) {
+//       c.status(403);
+//       return c.json({
+//         error: "User Not Found"
+//       })
+//     }
+//     if (body.password === user.password)
+//       return c.text("Logged In");
+//     else
+//       return c.text("Wrong Password");
 
-})
+
+
+//     // const payload = {
+//     //   sub: user.id,
+//     //   role: 'user',
+
+//     // }
+
+//     // const secret = c.env.JWT_SECRET;
+
+//     // const token = await sign(payload, secret);
+
+//     // console.log(`TOKEN :   ${token}`);
+
+
+//   }
+//   catch (err) {
+//     console.log(err);
+//     c.status(403);
+//     return c.json({
+//       message: "Something is worng"
+//     })
+
+//   }
+
+
+
+//   // return (
+//   //   c.text('login')
+//   // )
+
+// })
+
+
+
+
+// app.post('/blog', (c: any) => {
+//   return (
+//     c.text('Create Blog')
+//   )
+
+// })
+
+
+
+
+// app.put('/blog', (c: any) => {
+//   return (
+//     c.text('Update Blogs')
+//   )
+
+// })
+
+
+
+
+// app.get('/blog/:id', async (c: any) => {
+//   const id = c.req.param('id');
+//   // console.log(id);
+//   const userId = await c.get('userId')
+//   console.log(userId);
+
+
+//   return (
+//     c.text(`get Blogs ${id}`)
+//   )
+
+// })
 
 export default app
