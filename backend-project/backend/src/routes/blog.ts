@@ -2,6 +2,7 @@ import { Context, Hono } from "hono";
 import { decode, sign, verify } from 'hono/jwt'
 import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
+import { createBlog, updateBlog } from "@rajadwaita/zod-backend";
 
 
 
@@ -37,19 +38,19 @@ blogRouter.use('*', async (c, next) => {
 
 blogRouter.use('/*', async (c, next) => {
 
-    const JWT_SECRET = c.env.JWT_SECRET;
-    const authHeader = c.req.header('Authorization');
-
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        c.status(403);
-        return c.json({
-            message: 'Blocked'
-        })
-    }
-
-    const token = authHeader.split(" ")[1]
 
     try {
+        const JWT_SECRET = c.env.JWT_SECRET;
+        const authHeader = c.req.header('Authorization');
+
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            c.status(403);
+            return c.json({
+                message: 'Not Logged In'
+            })
+        }
+
+        const token = authHeader.split(" ")[1]
 
         const decoded = await verify(token, JWT_SECRET);
         console.log(`Decoded : ${decoded}`);
@@ -75,7 +76,7 @@ blogRouter.use('/*', async (c, next) => {
     catch (err) {
         c.status(403);
         return c.json({
-            message: "Error Occurred"
+            message: "Not Logged In"
         })
     }
 
@@ -92,6 +93,17 @@ blogRouter.post('/create', async (c: any) => {
         const prisma = await c.get('prisma');
         const body = await c.req.json();
         const userId = await c.get('userId')
+
+
+        const { success } = createBlog.safeParse(body);
+        if (!success) {
+            c.status(411);
+            return c.json({
+                message: "Invalid Inputs"
+            })
+        }
+
+
         const blog = await prisma.post.create({
             data: {
                 title: body.title,
@@ -129,6 +141,16 @@ blogRouter.put('/update', async (c: any) => {
         const body = await c.req.json();
         const blogId = await c.get('blogId');
         // const userId = await c.get('userId')
+
+        const { success } = updateBlog.safeParse(body);
+        if (!success) {
+            c.status(411);
+            return c.json({
+                message: "Invalid Inputs"
+            })
+        }
+
+
         const blog = await prisma.post.update({
             where: {
                 id: body.id,
