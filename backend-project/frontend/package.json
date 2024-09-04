@@ -12,13 +12,16 @@
   "dependencies": {
     "@rajadwaita/zod-backend": "^1.1.1",
     "autoprefixer": "^10.4.20",
+    "axios": "^1.7.7",
     "postcss": "^8.4.44",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.26.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@types/axios": "^0.14.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
