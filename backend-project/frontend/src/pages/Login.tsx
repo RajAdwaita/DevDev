@@ -1,23 +1,53 @@
+import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { BACKEND_URL } from '../config'
+import toast, { Toaster } from 'react-hot-toast'
 
 // type Props = {}
 
 const Login = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("")
-    const [name, setName] = useState("")
+    // const [name, setName] = useState("")
     const [password, setPassword] = useState("")
 
 
-    const handleSubmit = (e: { preventDefault: () => void }) => {
+    const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
 
         try {
+
+            const response = await axios.post(`${BACKEND_URL}/user/login`,
+                {
+                    email: email,
+                    password: password
+                }
+            )
+
+            const token = await localStorage.getItem('token');
+
+            if (response.data.success) {
+                await toast.success("Logged In");
+                setTimeout(() => {
+                    navigate('/blogs')
+                }, 2000);
+            }
+            else {
+                await toast.error("Invalid Credentials");
+                // window.location.reset();
+            }
+
+
 
         }
 
         catch (error) {
             console.log(error);
+            await toast.error("Invalid Credentials");
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000)
 
         }
 
@@ -80,7 +110,7 @@ const Login = () => {
                 </div>
             </div>
 
-
+            <Toaster />
         </>
     )
 }

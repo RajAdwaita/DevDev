@@ -187,10 +187,21 @@ blogRouter.get('/blog/:id', async (c: any) => {
         const blogId = await c.get('blogId');
         const userId = await c.get('userId')
         const blog = await prisma.post.findFirst({
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            },
             where: {
                 // id: body.id,
                 id: blog_id_param,
-            }
+            },
+
         })
 
         if (!blog) {
@@ -222,7 +233,18 @@ blogRouter.get('/allBlogs', async (c: any) => {
         const prisma = await c.get('prisma');
         const blogId = await c.get('blogId');
         const userId = await c.get('userId')
-        const blogs = await prisma.post.findMany();
+        const blogs = await prisma.post.findMany({
+            select: {
+                content: true,
+                title: true,
+                id: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });
 
         if (blogs.length === 0) {
             c.status(404);

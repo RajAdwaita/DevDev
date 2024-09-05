@@ -105,6 +105,7 @@ userRouter.post('/login', async (c) => {
         if (!success) {
             c.status(411);
             return c.json({
+                success: false,
                 message: "Invalid Inputs"
             })
         }
@@ -119,13 +120,20 @@ userRouter.post('/login', async (c) => {
         if (!user) {
             c.status(403);
             return c.json({
+                success: false,
                 error: "User Not Found"
             })
         }
         if (body.password === user.password)
-            return c.text("Logged In");
+            return c.json({
+                success: true,
+                message: "Logged In"
+            })
         else
-            return c.text("Wrong Password");
+            return c.json({
+                success: false,
+                message: "Invalid Password"
+            })
 
 
 
