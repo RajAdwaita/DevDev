@@ -1,13 +1,22 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { BACKEND_URL } from '../config'
 import AppBar from '../components/AppBar'
 
 
+interface Blog {
+    id: string;
+    title: string;
+    content: string;
+    author: {
+        name: string;
+    };
+}
+
 const Blog = () => {
     const [loading, setLoading] = useState(true)
-    const [blog, setBlog] = useState([])
+    const [blog, setBlog] = useState<Blog | null>(null)
     const { id } = useParams<{ id: string }>()
 
     useEffect(() => {
@@ -26,8 +35,8 @@ const Blog = () => {
                 )
                 await console.log(response.data.blog)
                 const blog = await response.data.blog;
-                await setLoading(false)
                 await setBlog(blog)
+                await setLoading(false)
 
 
             }
@@ -36,7 +45,7 @@ const Blog = () => {
         catch (error) {
             console.log(error);
         }
-    }, [])
+    }, [id])
 
 
     if (loading) {
@@ -47,7 +56,9 @@ const Blog = () => {
             </div>
         )
     }
-
+    if (!blog) {
+        return <div>No blog found</div>; // Handle null case for blog
+    }
 
 
     return (

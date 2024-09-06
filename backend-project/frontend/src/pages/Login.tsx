@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { BACKEND_URL } from '../config'
 import toast, { Toaster } from 'react-hot-toast'
@@ -25,7 +25,7 @@ const Login = () => {
                 }
             )
 
-            const token = await localStorage.getItem('token');
+            // const token = await localStorage.getItem('token');
 
             if (response.data.success) {
                 await toast.success("Logged In");

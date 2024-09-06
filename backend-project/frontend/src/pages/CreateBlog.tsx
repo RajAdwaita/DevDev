@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import AppBar from '../components/AppBar'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
 import toast, { Toaster } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
-type Props = {}
+// type Props = {}
 
 const CreateBlog = () => {
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ const CreateBlog = () => {
     const [content, setContent] = useState("")
 
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
 
@@ -65,7 +65,7 @@ const CreateBlog = () => {
 
                                 }}
                             />
-                            <textarea type="text" placeholder='Content' className='block w-full bg-transparent text-xl leading-relaxed placeholder-gray-500 outline-none h-screen resize-none border-b-2 border-gray-200 focus:border-black py-4' rows={20} onChange={(e) => {
+                            <textarea placeholder='Content' className='block w-full bg-transparent text-xl leading-relaxed placeholder-gray-500 outline-none h-screen resize-none border-b-2 border-gray-200 focus:border-black py-4' rows={20} onChange={(e) => {
                                 setContent(e.target.value);
                             }} ></textarea>
                             <div className='flex justify-center items-center text-center w-full py-8'>
