@@ -33,6 +33,7 @@ const Blogs = () => {
                 <BlogsTopBar />
 
 
+
                 {
                     blogs.map((blog, index) => (
                         <BlogCard key={index} authorName={blog.author.name} title={blog.title} content={blog.content} publishedDate={"Sept-09, 24"} id={blog.id} />

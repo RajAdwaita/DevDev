@@ -14,9 +14,9 @@ const BlogCard = ({ authorName, title, content, publishedDate, id }: Props) => {
     return (
         <>
             <Link to={`/blog/${id}`}>
-                <div className='flex flex-col items-center justify-between mt-8 cursor-pointer'>
+                <div className='flex flex-col items-center justify-between mt-8 cursor-pointer '>
 
-                    <div className="max-w-4xl w-full flex justify-between items-start gap-8">
+                    <div className="max-w-4xl w-full flex justify-between items-start gap-8 space-y-8">
                         {/* Added `items-start` for top alignment and increased gap */}
 
                         <div className='text-data w-2/3'> {/* Limited width to 2/3 */}
@@ -40,7 +40,7 @@ const BlogCard = ({ authorName, title, content, publishedDate, id }: Props) => {
                             <div className="mt-8 flex justify-between items-center">
                                 <div className='flex gap-8'>
                                     <div className='p-1 bg-gray-300 shadow-md rounded-lg'>Side Hustle</div>
-                                    <div>3-min-read</div>
+                                    <div>{Math.ceil(content.length / 100)} - min-read</div>
                                 </div>
                                 <div className='flex gap-4'>
                                     <div>

@@ -19,6 +19,7 @@ function App() {
           <Route path='/create' element={<CreateBlog />}></Route>
           <Route path='/blogs' element={<Blogs />} ></Route>
           <Route path='/blog/:id' element={<Blog />}></Route>
+          <Route path='/createBlog' element={<CreateBlog />}></Route>
           {/* <Route path='' element={ }></Route> */}
 
 

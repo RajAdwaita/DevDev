@@ -99,6 +99,7 @@ blogRouter.post('/create', async (c: any) => {
         if (!success) {
             c.status(411);
             return c.json({
+                success: false,
                 message: "Invalid Inputs"
             })
         }
@@ -108,23 +109,25 @@ blogRouter.post('/create', async (c: any) => {
             data: {
                 title: body.title,
                 content: body.content,
-                authorId: userId
+                authorId: userId,
+                published: true
             }
         })
         console.log(blog);
 
-        c.set("blogId", blog.id);
+        await c.set("blogId", blog.id);
         console.log(`BLOG ID : ${blog.id}`);
 
 
         return (
-            c.json({ message: 'Blog Created' })
+            c.json({ id: blog.id, success: true, message: 'Blog Created' })
         )
     }
     catch (err) {
         console.log(err);
         c.status(403);
         return c.json({
+            success: false,
             message: "Error creating blog"
         })
     }
