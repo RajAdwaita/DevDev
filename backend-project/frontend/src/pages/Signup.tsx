@@ -2,7 +2,7 @@ import axios, { isAxiosError } from 'axios'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { BACKEND_URL } from '../config'
-import toast from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 
 // type Props = {}
 
@@ -17,17 +17,20 @@ const Signup = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://127.0.0.1:8787/api/v1/user/signup',
+            const response = await axios.post(`${BACKEND_URL}/user/signup`,
                 {
                     email: email,
                     name: name,
                     password: password
                 }
             )
+            const token = await response.data.token;
+            await localStorage.setItem('token', token);
+
             console.log("RESPONSE: " + response);
 
 
-            toast.success('Account Created!')
+            await toast.success('Account Created!')
             setTimeout(() => {
                 navigate('/login')
             }, 2000)
@@ -36,7 +39,7 @@ const Signup = () => {
 
         catch (error) {
             console.log("ERROR: " + error);
-            toast.error("Account Creation Failed!")
+            await toast.error("Account Creation Failed!")
 
             // setTimeout(() => {
             //     window.location.reload();
@@ -103,7 +106,7 @@ const Signup = () => {
                 </div>
             </div>
 
-
+            <Toaster />
         </>
     )
 }
