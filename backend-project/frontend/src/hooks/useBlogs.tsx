@@ -1,11 +1,21 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+
+
+interface Blog {
+    id: string;
+    title: string;
+    content: string;
+    author: {
+        name: string;
+    };
+}
 
 
 export const useBlogs = () => {
 
 
-    const [blogs, setBlogs] = useState([])
+    const [blogs, setBlogs] = useState<Blog[]>([])
     const [loading, setLoading] = useState(true)
 
 

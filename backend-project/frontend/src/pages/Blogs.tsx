@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from 'react'
+// import React, { useEffect, useState } from 'react'
 import BlogsTopBar from '../components/BlogsTopBar'
 import BlogCard from '../components/BlogCard'
-import axios from 'axios'
+// import axios from 'axios'
 import AppBar from '../components/AppBar'
 import { useBlogs } from '../hooks/useBlogs'
 
+
+interface Blog {
+    id: string;
+    title: string;
+    content: string;
+    author: {
+        name: string;
+    };
+}
 
 const Blogs = () => {
 
@@ -35,7 +44,7 @@ const Blogs = () => {
 
 
                 {
-                    blogs.map((blog, index) => (
+                    blogs.map((blog: Blog, index) => (
                         <BlogCard key={index} authorName={blog.author.name} title={blog.title} content={blog.content} publishedDate={"Sept-09, 24"} id={blog.id} />
 
                     ))
