@@ -1,9 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server"
+import client from '@/db'
 
-
-const client = new PrismaClient();
+// const client = new PrismaClient();
 
 export function GET() {
     // database logic
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
         console.log(header);
 
 
-        const param = req.nextUrl.searchParams.get('name');
+        // const param = req.nextUrl.searchParams.get('name');
 
         // return Response.json({
         //     username: body.username,

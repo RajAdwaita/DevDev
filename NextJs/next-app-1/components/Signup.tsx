@@ -1,5 +1,6 @@
 'use client'
 
+import { signup } from '@/app/actions/user'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
@@ -7,24 +8,32 @@ import React, { useState } from 'react'
 const SignupComponent = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const router = useRouter();
+    // const router = useRouter();
 
 
     const handleClick = async () => {
         try {
 
-            const response = await axios.post('http://localhost:3000/api/user',
-                {
+            // const response = await axios.post('http://localhost:3000/api/user',
+            //     {
 
-                    username: username,
-                    password: password
+            //         username: username,
+            //         password: password
 
-                }
-            )
-            // console.log(username);
+            //     }
+            // )
+            // // console.log(username);
 
-            await console.log(response.data);
-            router.push('/signin')
+            // await console.log(response.data);
+
+
+            //  using server actions 
+
+
+            await signup({ username, password });
+            // console.log("Data: " + response);
+
+            // router.push('/signin')
         }
         catch (error) {
             console.log(error);
